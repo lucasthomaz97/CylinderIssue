@@ -1,0 +1,52 @@
+[gd_scene load_steps=8 format=3 uid="uid://hb0rakf13go"]
+
+[ext_resource type="Script" path="res://bug_reproduction.gd" id="1_4bmja"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_rynti"]
+friction = 0.0
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_gkekk"]
+size = Vector3(10, 1, 10)
+
+[sub_resource type="BoxMesh" id="BoxMesh_gftu4"]
+size = Vector3(10, 1, 10)
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_5w8ct"]
+height = 0.5
+radius = 2.0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_vxwbq"]
+albedo_color = Color(1, 0.360784, 0.109804, 1)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_balgh"]
+material = SubResource("StandardMaterial3D_vxwbq")
+top_radius = 1.0
+bottom_radius = 1.0
+height = 0.5
+
+[node name="Node3D" type="Node3D"]
+script = ExtResource("1_4bmja")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+physics_material_override = SubResource("PhysicsMaterial_rynti")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+shape = SubResource("BoxShape3D_gkekk")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D"]
+mesh = SubResource("BoxMesh_gftu4")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.511548, -0.81488, -0.27256, 0.792266, 0.32452, 0.516722, -0.332615, -0.480268, 0.811609, 0, 3.49795, 0)
+
+[node name="RigidBody3D" type="RigidBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.5, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="RigidBody3D"]
+shape = SubResource("CylinderShape3D_5w8ct")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="RigidBody3D/CollisionShape3D"]
+mesh = SubResource("CylinderMesh_balgh")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.899199, 0.43754, 0, -0.43754, 0.899199, 0, 3.33273, 4.63574)
